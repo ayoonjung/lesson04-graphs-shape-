@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 
 st.set_page_config(page_title="영화 데이터 그래프 도감 2 - 분포와 관계", layout="wide")
@@ -59,6 +60,66 @@ st.info("💡 이 그래프로 알 수 있는 것: ")
 st.divider()
 
 # ------------------------------------------------------------
+# 구역 2. 장르 안 영화별 총 관객 트리맵
+# ------------------------------------------------------------
+st.header("2. 장르 안 영화별 총 관객 트리맵")
+
+fig_treemap = px.treemap(
+    df,
+    path=[px.Constant("전체"), "genre", "movieNm"],
+    values="total_audi",
+)
+fig_treemap.update_traces(
+    hovertemplate="영화명: %{label}<br>총 관객: %{value:,}명<extra></extra>",
+)
+fig_treemap.update_layout(margin=dict(t=20, b=20, l=0, r=0))
+
+st.plotly_chart(fig_treemap, use_container_width=True)
+
+st.info("💡 이 그래프로 알 수 있는 것: ")
+
+st.divider()
+
+# ------------------------------------------------------------
+# 구역 3. 총 관객 히스토그램
+# ------------------------------------------------------------
+st.header("3. 총 관객 분포")
+
+fig_hist = px.histogram(
+    df,
+    x="total_audi",
+    nbins=30,
+)
+fig_hist.update_traces(
+    hovertemplate="구간: %{x}<br>영화 수: %{y}편<extra></extra>",
+)
+fig_hist.update_layout(
+    margin=dict(t=20, b=20, l=0, r=0),
+    xaxis_title="총 관객 수",
+    yaxis_title="영화 수",
+    bargap=0.05,
+)
+
+st.plotly_chart(fig_hist, use_container_width=True)
+
+# 가장 영화가 몰린 구간, 최다 관객 영화 자동 계산
+counts, bin_edges = np.histogram(df["total_audi"], bins=30)
+max_bin_idx = counts.argmax()
+bin_start = bin_edges[max_bin_idx]
+bin_end = bin_edges[max_bin_idx + 1]
+
+top_movie_row = df.loc[df["total_audi"].idxmax()]
+
+st.info(
+    f"💡 이 그래프로 알 수 있는 것: 대부분의 영화는 총 관객 "
+    f"약 {bin_start:,.0f}명 ~ {bin_end:,.0f}명 구간에 몰려 있으며({counts[max_bin_idx]}편), "
+    f"가장 많은 관객을 동원한 영화는 '{top_movie_row['movieNm']}'"
+    f"(총 관객 {top_movie_row['total_audi']:,}명)입니다."
+)
+
+st.divider()
+
+# ------------------------------------------------------------
 # (앞으로 그래프가 계속 추가될 구역)
 # ------------------------------------------------------------
-# st.header("2. ...")
+# st.header("4. ...")
