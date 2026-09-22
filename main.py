@@ -260,32 +260,6 @@ st.info("💡 이 그래프로 알 수 있는 것: ")
 st.divider()
 
 # ------------------------------------------------------------
-# 구역 9. 10위권 체류일수 vs 총 관객 산점도
-# ------------------------------------------------------------
-st.header("10위권에 오래 머문 영화는 총 관객도 많은가")
-
-fig_top10 = px.scatter(
-    df,
-    x="days_in_top10",
-    y="total_audi",
-    hover_name="movieNm",
-)
-fig_top10.update_traces(
-    hovertemplate="%{hovertext}<br>10위권 체류일수: %{x}일<br>총 관객: %{y:,}명<extra></extra>",
-)
-fig_top10.update_layout(
-    margin=dict(t=20, b=20, l=0, r=0),
-    xaxis_title="10위권에 머문 날수",
-    yaxis_title="총 관객 수",
-)
-
-st.plotly_chart(fig_top10, use_container_width=True)
-
-st.info("💡 이 그래프로 알 수 있는 것: ")
-
-st.divider()
-
-# ------------------------------------------------------------
 # (앞으로 그래프가 계속 추가될 구역)
 # ------------------------------------------------------------
 # st.header("9. ...")
