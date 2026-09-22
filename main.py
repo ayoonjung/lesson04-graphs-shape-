@@ -120,6 +120,34 @@ st.info(
 st.divider()
 
 # ------------------------------------------------------------
+# 구역 4. 개봉일 스크린수 vs 총 관객 산점도
+# ------------------------------------------------------------
+st.header("4. 개봉일 스크린수와 총 관객의 관계")
+
+fig_scatter = px.scatter(
+    df,
+    x="first_scrn",
+    y="total_audi",
+    color="genre",
+    hover_name="movieNm",
+)
+fig_scatter.update_traces(
+    hovertemplate="%{hovertext}<br>개봉일 스크린수: %{x:,}개<br>총 관객: %{y:,}명<extra></extra>",
+)
+fig_scatter.update_layout(
+    margin=dict(t=20, b=20, l=0, r=0),
+    xaxis_title="개봉일 스크린수",
+    yaxis_title="총 관객 수",
+    legend_title="장르",
+)
+
+st.plotly_chart(fig_scatter, use_container_width=True)
+
+st.info("💡 이 그래프로 알 수 있는 것: ")
+
+st.divider()
+
+# ------------------------------------------------------------
 # (앞으로 그래프가 계속 추가될 구역)
 # ------------------------------------------------------------
-# st.header("4. ...")
+# st.header("5. ...")
