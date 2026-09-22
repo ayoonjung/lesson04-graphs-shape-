@@ -148,6 +148,37 @@ st.info("💡 이 그래프로 알 수 있는 것: ")
 st.divider()
 
 # ------------------------------------------------------------
+# 구역 5. 영화 10편 이상 장르의 총 관객 박스플롯
+# ------------------------------------------------------------
+st.header("5. 장르별 총 관객 분포 (10편 이상 장르)")
+
+genre_movie_counts = df["genre"].value_counts()
+major_genres = genre_movie_counts[genre_movie_counts >= 10].index
+df_major = df[df["genre"].isin(major_genres)]
+
+fig_box = px.box(
+    df_major,
+    x="genre",
+    y="total_audi",
+    hover_name="movieNm",
+    points="outliers",
+)
+fig_box.update_traces(
+    hovertemplate="%{hovertext}<br>총 관객: %{y:,}명<extra></extra>",
+)
+fig_box.update_layout(
+    margin=dict(t=20, b=20, l=0, r=0),
+    xaxis_title="장르",
+    yaxis_title="총 관객 수",
+)
+
+st.plotly_chart(fig_box, use_container_width=True)
+
+st.info("💡 이 그래프로 알 수 있는 것: ")
+
+st.divider()
+
+# ------------------------------------------------------------
 # (앞으로 그래프가 계속 추가될 구역)
 # ------------------------------------------------------------
-# st.header("5. ...")
+# st.header("6. ...")
