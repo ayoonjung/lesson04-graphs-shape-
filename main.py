@@ -209,6 +209,31 @@ st.info("💡 이 그래프로 알 수 있는 것: ")
 st.divider()
 
 # ------------------------------------------------------------
+# 구역 7. 제작 국가 -> 장르 선버스트 (칸 크기: 영화 편수)
+# ------------------------------------------------------------
+st.header("7. 제작 국가별 장르 구성")
+
+nation_genre_counts = (
+    df.groupby(["nation", "genre"]).size().reset_index(name="count")
+)
+
+fig_sunburst = px.sunburst(
+    nation_genre_counts,
+    path=["nation", "genre"],
+    values="count",
+)
+fig_sunburst.update_traces(
+    hovertemplate="%{label}<br>편수: %{value}편<extra></extra>",
+)
+fig_sunburst.update_layout(margin=dict(t=20, b=20, l=0, r=0))
+
+st.plotly_chart(fig_sunburst, use_container_width=True)
+
+st.info("💡 이 그래프로 알 수 있는 것: ")
+
+st.divider()
+
+# ------------------------------------------------------------
 # (앞으로 그래프가 계속 추가될 구역)
 # ------------------------------------------------------------
-# st.header("7. ...")
+# st.header("8. ...")
