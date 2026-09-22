@@ -179,6 +179,36 @@ st.info("💡 이 그래프로 알 수 있는 것: ")
 st.divider()
 
 # ------------------------------------------------------------
+# 구역 6. 개봉일 스크린수 vs 총 관객 버블 차트 (크기: 첫 주 관객)
+# ------------------------------------------------------------
+st.header("6. 개봉일 스크린수와 총 관객의 관계 (첫 주 관객 크기 반영)")
+
+fig_bubble = px.scatter(
+    df,
+    x="first_scrn",
+    y="total_audi",
+    color="genre",
+    size="first_week_audi",
+    size_max=40,
+    hover_name="movieNm",
+)
+fig_bubble.update_traces(
+    hovertemplate="%{hovertext}<br>개봉일 스크린수: %{x:,}개<br>총 관객: %{y:,}명<br>첫 주 관객: %{marker.size:,}명<extra></extra>",
+)
+fig_bubble.update_layout(
+    margin=dict(t=20, b=20, l=0, r=0),
+    xaxis_title="개봉일 스크린수",
+    yaxis_title="총 관객 수",
+    legend_title="장르",
+)
+
+st.plotly_chart(fig_bubble, use_container_width=True)
+
+st.info("💡 이 그래프로 알 수 있는 것: ")
+
+st.divider()
+
+# ------------------------------------------------------------
 # (앞으로 그래프가 계속 추가될 구역)
 # ------------------------------------------------------------
-# st.header("6. ...")
+# st.header("7. ...")
