@@ -234,6 +234,58 @@ st.info("💡 이 그래프로 알 수 있는 것: ")
 st.divider()
 
 # ------------------------------------------------------------
+# 구역 8. 개봉일 스크린수 vs 첫 주 관객 산점도
+# ------------------------------------------------------------
+st.header("개봉일 스크린수가 많을수록 첫 주 관객도 많을까?")
+
+fig_scrn_week = px.scatter(
+    df,
+    x="first_scrn",
+    y="first_week_audi",
+    hover_name="movieNm",
+)
+fig_scrn_week.update_traces(
+    hovertemplate="%{hovertext}<br>개봉일 스크린수: %{x:,}개<br>첫 주 관객: %{y:,}명<extra></extra>",
+)
+fig_scrn_week.update_layout(
+    margin=dict(t=20, b=20, l=0, r=0),
+    xaxis_title="개봉일 스크린수",
+    yaxis_title="첫 주 관객 수",
+)
+
+st.plotly_chart(fig_scrn_week, use_container_width=True)
+
+st.info("💡 이 그래프로 알 수 있는 것: ")
+
+st.divider()
+
+# ------------------------------------------------------------
+# 구역 9. 10위권 체류일수 vs 총 관객 산점도
+# ------------------------------------------------------------
+st.header("10위권에 오래 머문 영화는 총 관객도 많은가")
+
+fig_top10 = px.scatter(
+    df,
+    x="days_in_top10",
+    y="total_audi",
+    hover_name="movieNm",
+)
+fig_top10.update_traces(
+    hovertemplate="%{hovertext}<br>10위권 체류일수: %{x}일<br>총 관객: %{y:,}명<extra></extra>",
+)
+fig_top10.update_layout(
+    margin=dict(t=20, b=20, l=0, r=0),
+    xaxis_title="10위권에 머문 날수",
+    yaxis_title="총 관객 수",
+)
+
+st.plotly_chart(fig_top10, use_container_width=True)
+
+st.info("💡 이 그래프로 알 수 있는 것: ")
+
+st.divider()
+
+# ------------------------------------------------------------
 # (앞으로 그래프가 계속 추가될 구역)
 # ------------------------------------------------------------
-# st.header("8. ...")
+# st.header("9. ...")
